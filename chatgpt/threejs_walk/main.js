@@ -43,8 +43,7 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // #################################################### CANNON
-
+    // CANNON
     world = new CANNON.World();
     world.gravity.set(0, -9.82, 0); // 重力を設定
 
@@ -100,10 +99,7 @@ function init() {
     }
 
     camera.position.z = 5;
-    // cannonControls = new THREE.OrbitControls(camera, renderer.domElement);
     cannonControls = new CannonCameraController(camera, world, camera.position);
-
-    // ####################################################
 
     // 地面を作成
     var groundGeometry = new THREE.PlaneGeometry(1000, 1000);
@@ -172,101 +168,7 @@ function init() {
 
     // 地面にシャドウレシーバーの設定を追加
     ground.receiveShadow = true;
-
-    // ... 他の設定は省略 ...
-
-    // document.addEventListener("keydown", onKeyDown);
-    // document.addEventListener("keyup", onKeyUp);
-
-    // document.addEventListener("mousedown", onMouseDown);
-    // document.addEventListener("mousemove", onMouseMove);
-    // document.addEventListener("mouseup", onMouseUp);
-
-    // Pointer Lock API を使ってマウスキャプチャを設定
-    var element = document.body;
-    element.requestPointerLock =
-        element.requestPointerLock ||
-        element.mozRequestPointerLock ||
-        element.webkitRequestPointerLock;
-    document.addEventListener("click", function () {
-        element.requestPointerLock();
-    });
 }
-
-// function onKeyDown(event) {
-//     switch (event.key) {
-//         case "w":
-//             moveForward = true;
-//             break;
-//         case "s":
-//             moveBackward = true;
-//             break;
-//         case "a":
-//             moveLeft = true;
-//             break;
-//         case "d":
-//             moveRight = true;
-//             break;
-//     }
-// }
-
-// function onKeyUp(event) {
-//     switch (event.key) {
-//         case "w":
-//             moveForward = false;
-//             break;
-//         case "s":
-//             moveBackward = false;
-//             break;
-//         case "a":
-//             moveLeft = false;
-//             break;
-//         case "d":
-//             moveRight = false;
-//             break;
-//     }
-// }
-
-// function onMouseDown(event) {
-//     isDragging = true;
-//     previousMousePosition = {
-//         x: event.clientX,
-//         y: event.clientY,
-//     };
-// }
-
-// function onMouseMove(event) {
-//     if (isDragging) {
-//         var deltaMove = {
-//             x: event.clientX - previousMousePosition.x,
-//             y: event.clientY - previousMousePosition.y,
-//         };
-
-//         var sensitivity = 0.005; // 回転感度
-//         var euler = new THREE.Euler(0, 0, 0, "YXZ");
-//         euler.setFromQuaternion(camera.quaternion);
-
-//         euler.y -= deltaMove.x * sensitivity;
-//         euler.x -= deltaMove.y * sensitivity;
-
-//         var maxVerticalAngle = Math.PI / 4; // 上向きの最大角度 (ここでは45度)
-//         euler.x = Math.max(
-//             -maxVerticalAngle,
-//             Math.min(maxVerticalAngle, euler.x)
-//         );
-
-//         camera.quaternion.setFromEuler(euler);
-
-//         previousMousePosition = {
-//             x: event.clientX,
-//             y: event.clientY,
-//         };
-//     }
-// }
-
-// function onMouseUp() {
-//     isDragging = false;
-// }
 
 function animate() {
     requestAnimationFrame(animate);
@@ -276,9 +178,6 @@ function animate() {
     // Three.jsのオブジェクトをCannon.jsの位置に更新
     cube.position.copy(cubeBody.position);
     cube.quaternion.copy(cubeBody.quaternion);
-
-    // // Cannon.jsのコントロールをアップデート
-    // cannonControls.update();
 
     // ... 他のアニメーション処理 ...
 
